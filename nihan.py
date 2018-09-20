@@ -26,13 +26,13 @@ class Spider:
 
         # 获取每页的HTML源码字符串
         html = response.read()
-        #print html
+        #print (html)
 
         # 创建正则表达式规则对象，匹配每页里的段子内容，re.S 表示匹配全部字符串内容
         pattern = re.compile('<div\sclass="f18 mb20">(.*?)</div>', re.S)
 
         # 将正则匹配对象应用到html源码字符串里，返回这个页面里的所有段子的列表
-        content_list = pattern.findall(html)
+        content_list = pattern.findall(str(html))
 
         # 调用dealPage() 处理段子里的杂七杂八
         self.dealPage(content_list)
@@ -78,6 +78,6 @@ class Spider:
 
 if __name__ == "__main__":
     duanziSpider = Spider()
-#    duanziSpider.loadPage()
+   # duanziSpider.loadPage()
     duanziSpider.startWork()
 

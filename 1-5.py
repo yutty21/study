@@ -18,15 +18,16 @@ request = urllib.request.Request(url, headers=headers)
 response = urllib.request.urlopen(request)
 
 str1 = response.read().decode()
+strA = "red04,18,19,24,25,26"
 
 str2 = re.split('red',str1)
-str3 = re.split(',|(?=(?:\d{5}|[A-Z]{2}))',str1)
+str3 = re.search('red(?=\d)',str1)
+str4 = re.match('red(?=\d)',str1)
 
-str4 = re.match('red',str1)
-if str4 is not None:
-    print(str4)
+str5 = re.split('red(?<=\d)',strA)
 
-print(str1)
-print(str2)
-print(str3)
-print(str4)
+'''#循环迭代器取值
+for i in str3:
+    print(i.group())'''
+
+print (str2)
