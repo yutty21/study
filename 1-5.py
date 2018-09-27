@@ -2,8 +2,10 @@
 import urllib.request
 import urllib.parse
 import re
+import json
 
-url = "http://www.cwl.gov.cn/cwl_admin/kjxx/findDrawNotice?name=ssq&issueCount=30"
+#url = "http://www.cwl.gov.cn/cwl_admin/kjxx/findDrawNotice?name=ssq&issueCount=100"
+url = "http://www.cwl.gov.cn/cwl_admin/kjxx/findDrawNotice?name=ssq&issueCount=1000&issueStart=&issueEnd=&dayStart=2012-10-24&dayEnd=2018-09-27&pageNo="
 #word = {"wd":"name=ssq&issueCount=30"}
 #word = urllib.parse.urlencode(word) #转换成url编码格式（字符串）
 #newurl = url + "?" + word    # url首个分隔符就是 ?
@@ -13,21 +15,16 @@ headers = {"Referer":"http://www.cwl.gov.cn/kjxx/ssq/kjgg/"}
 
 
 
+
 request = urllib.request.Request(url, headers=headers)
 
 response = urllib.request.urlopen(request)
 
 str1 = response.read().decode()
-strA = "red04,18,19,24,25,26"
 
-str2 = re.split('red',str1)
-str3 = re.search('red(?=\d)',str1)
-str4 = re.match('red(?=\d)',str1)
+jsonObj = json.loads(str1)
 
-str5 = re.split('red(?<=\d)',strA)
-
-'''#循环迭代器取值
-for i in str3:
-    print(i.group())'''
-
-print (str2)
+result = jsonObj["result"]
+for item in result :
+    print(item["date"] + ", red = "  + item["red"])
+    pass
