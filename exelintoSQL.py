@@ -67,8 +67,7 @@ def store_to(db_name, table_name, excel_file):
             num += 1
             if (num >= 10000):  # 每一万条数据执行一次插入
                 print(sys.getsizeof(list))
-                sql = "INSERT INTO " + table_name + " (time, xingbie, afdd, xzb, yzb, cfbj, jjlbmc, \
-                bjlbmc, bjlxmc, bjlxxlmc, gxqymc,gxdwmc, afql, afxqxx, cjdwmc)\
+                sql = "INSERT INTO " + table_name + " (issue, red1, red2, red3, red4, red5, red5, blue,jackpot , first_prize_number, first_prize_bonus,second_prize_number, second_prize_bonus, current_bankroll, prize_date)\
                 VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
                 cursor.executemany(sql, list)  # 执行sql语句
 
@@ -83,4 +82,4 @@ def store_to(db_name, table_name, excel_file):
 
 
 if __name__ == '__main__':
-    store_to('demo', 'demo_yangben', 'xxx.xlsx')
+    store_to('CheckCai', 'double', 'doubleB.xlsx')

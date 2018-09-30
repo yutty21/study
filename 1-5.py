@@ -25,7 +25,6 @@ str1 = response.read().decode()
 jsonObj = json.loads(str1)
 
 print(str1)
-
 result = jsonObj["result"]
 for item in result :
     print(item["date"] + ", red = "  + item["red"] + "  ,blue = "+item["blue"])
