@@ -105,5 +105,14 @@ def store_to(db_name, table_name, excel_file):
     db.close()
 
 
+def from_store():
+    m = {'1': '2', '3': '4'}
+    data = [m, m]
+
+    if n in 10:
+        sql1 = "SELECT * "
+    return data
+
+
 if __name__ == '__main__':
     store_to('CheckCai', 'double', 'doubleB.xlsx')
