@@ -41,6 +41,7 @@ def open_excel(excel_file):
         print("open excel file failed!")
 
 
+
 '''
     执行插入操作
     args:db_name（数据库名称）
@@ -105,14 +106,31 @@ def store_to(db_name, table_name, excel_file):
     db.close()
 
 
-def from_store():
+def from_store(db_name):
     m = {'1': '2', '3': '4'}
     data = [m, m]
 
-    if n in 10:
-        sql1 = "SELECT * "
+    db = mysql_link(db_name)  # 打开数据库连接
+    cursor1 = db.cursor()  # 使用 cursor() 方法创建一个游标对象 cursor
+
+    '''
+        for n in 10:
+        sql1 = "SELECT * 'double' order by id=%s"
+        cursor1.execute(sql1,n)
+        D = cursor1.fetchone() #获取上个查询的结果值
+        print(D)
+    '''
+    sql1 = "SELECT * FROM `double` WHERE id=1"
+    cursor1.execute(sql1)
+    D = cursor1.fetchone() #获取上个查询的结果值
+    print(D)
+
+    cursor1.close()  # 关闭连接
+    db.close()
+
     return data
 
 
 if __name__ == '__main__':
-    store_to('CheckCai', 'double', 'doubleB.xlsx')
+    from_store('double')
+    #store_to('CheckCai', 'double', 'doubleB.xlsx')

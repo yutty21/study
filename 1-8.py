@@ -1,6 +1,6 @@
 from sanic import Sanic
 from sanic.response import json
-import exelintoSQL
+import excelintoSQL
 
 app = Sanic()
 
@@ -8,7 +8,7 @@ app = Sanic()
 async def test(request):
     # return json({'hello': 'world'})
 
-    data = exelintoSQL.from_store()
+    data = excelintoSQL.from_store('double')
     return json(data)
 
 if __name__ == '__main__':
