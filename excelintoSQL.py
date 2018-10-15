@@ -1,6 +1,7 @@
 import mysql.connector
 import xlrd
 import sys
+import json
 
 '''
     连接数据库
@@ -107,11 +108,9 @@ def store_to(db_name, table_name, excel_file):
 
 
 def from_store(db_name):
-    m = {'1': '2', '3': '4'}
-    data = [m, m]
 
     db = mysql_link(db_name)  # 打开数据库连接
-    cursor1 = db.cursor()  # 使用 cursor() 方法创建一个游标对象 cursor
+    cursor = db.cursor()  # 使用 cursor() 方法创建一个游标对象 cursor
 
     '''
         for n in 10:
@@ -119,18 +118,34 @@ def from_store(db_name):
         cursor1.execute(sql1,n)
         D = cursor1.fetchone() #获取上个查询的结果值
         print(D)
+        sql1 = "SELECT * FROM `test` WHERE id=1"
+        cursor1.execute(sql1)
+        D = cursor1.fetchone() #获取上个查询的结果值
+        print(D)
+        sql1 = "SELECT * FROM `test` WHERE id=1"
+        cursor1.execute(sql1)
+        D = cursor1.fetchone()  # 获取上个查询的结果值
+        print(D)
     '''
-    sql1 = "SELECT * FROM `double` WHERE id=1"
-    cursor1.execute(sql1)
-    D = cursor1.fetchone() #获取上个查询的结果值
-    print(D)
 
-    cursor1.close()  # 关闭连接
+
+
+    sql2 = "SELECT * FROM `test`"
+    cursor.execute(sql2)
+    rows = cursor.fetchall()
+    for row in rows:
+        data = {}
+        data['id'] = row[0]
+        data['testid'] = row[1]
+        jsonData.append(data)
+        print(row)
+
+    cursor.close()  # 关闭连接
     db.close()
 
     return data
 
 
 if __name__ == '__main__':
-    from_store('double')
+    from_store('test')
     #store_to('CheckCai', 'double', 'doubleB.xlsx')

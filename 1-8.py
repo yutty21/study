@@ -8,7 +8,7 @@ app = Sanic()
 async def test(request):
     # return json({'hello': 'world'})
 
-    data = excelintoSQL.from_store('double')
+    data = excelintoSQL.from_store('test')
     return json(data)
 
 if __name__ == '__main__':
