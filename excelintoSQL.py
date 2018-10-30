@@ -112,40 +112,26 @@ def from_store(db_name):
     db = mysql_link(db_name)  # 打开数据库连接
     cursor = db.cursor()  # 使用 cursor() 方法创建一个游标对象 cursor
 
-    '''
-        for n in 10:
-        sql1 = "SELECT * 'double' order by id=%s"
-        cursor1.execute(sql1,n)
-        D = cursor1.fetchone() #获取上个查询的结果值
-        print(D)
-        sql1 = "SELECT * FROM `test` WHERE id=1"
-        cursor1.execute(sql1)
-        D = cursor1.fetchone() #获取上个查询的结果值
-        print(D)
-        sql1 = "SELECT * FROM `test` WHERE id=1"
-        cursor1.execute(sql1)
-        D = cursor1.fetchone()  # 获取上个查询的结果值
-        print(D)
-    '''
-
-
-
     sql2 = "SELECT * FROM `test`"
     cursor.execute(sql2)
     rows = cursor.fetchall()
+    jsonData = []
+
     for row in rows:
+        result = {}
         data = {}
         data['id'] = row[0]
         data['testid'] = row[1]
-        jsonData.append(data)
+        result["data"]= data
+        jsonData.append(result)
         print(row)
+
+
+    print(jsonData)
 
     cursor.close()  # 关闭连接
     db.close()
 
-    return data
+    return jsonData
 
 
-if __name__ == '__main__':
-    from_store('test')
-    #store_to('CheckCai', 'double', 'doubleB.xlsx')

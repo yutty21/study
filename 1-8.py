@@ -4,7 +4,7 @@ import excelintoSQL
 
 app = Sanic()
 
-@app.route('/everything/api/v1')
+@app.route('/sql/api/v1')
 async def test(request):
     # return json({'hello': 'world'})
 
