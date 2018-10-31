@@ -8,7 +8,13 @@ app = Sanic()
 async def test(request):
     # return json({'hello': 'world'})
 
-    data = excelintoSQL.from_store('test')
+    data = excelintoSQL.from_store('double')
+    return json(data)
+@app.route('/sql/api/v2')
+async def test(request):
+    # return json({'hello': 'world'})
+
+    data = excelintoSQL.from_store('double')
     return json(data)
 
 if __name__ == '__main__':

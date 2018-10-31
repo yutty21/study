@@ -112,7 +112,7 @@ def from_store(db_name):
     db = mysql_link(db_name)  # 打开数据库连接
     cursor = db.cursor()  # 使用 cursor() 方法创建一个游标对象 cursor
 
-    sql2 = "SELECT * FROM `test`"
+    sql2 = "SELECT * FROM `double`"
     cursor.execute(sql2)
     rows = cursor.fetchall()
     jsonData = []
@@ -120,11 +120,23 @@ def from_store(db_name):
     for row in rows:
         result = {}
         data = {}
-        data['id'] = row[0]
-        data['testid'] = row[1]
+        data['issue'] = row[0]
+        data['red1'] = row[1]
+        data['red2'] = row[2]
+        data['red3'] = row[3]
+        data['red4'] = row[4]
+        data['red5'] = row[5]
+        data['red6'] = row[6]
+        data['blue'] = row[7]
+        data['Jackpot'] = row[8]
+        data['first_prize_number'] = row[9]
+        data['first_prize_bonus'] = row[10]
+        data['second_prize_number'] = row[11]
+        data['second_prize_bonus'] = row[12]
+        data['prize_data'] = row[13]
+        data['current_bankroll'] =row[14]
         result["data"]= data
         jsonData.append(result)
-        print(row)
 
 
     print(jsonData)
@@ -133,5 +145,45 @@ def from_store(db_name):
     db.close()
 
     return jsonData
+
+def from_store(db_name):
+
+    db = mysql_link(db_name)  # 打开数据库连接
+    cursor = db.cursor()  # 使用 cursor() 方法创建一个游标对象 cursor
+
+    sql2 = "SELECT * FROM `double` WHERE issue=18110"
+    cursor.execute(sql2)
+    rows = cursor.fetchall()
+    jsonData = []
+
+    for row in rows:
+        result = {}
+        data = {}
+        data['issue'] = row[0]
+        data['red1'] = row[1]
+        data['red2'] = row[2]
+        data['red3'] = row[3]
+        data['red4'] = row[4]
+        data['red5'] = row[5]
+        data['red6'] = row[6]
+        data['blue'] = row[7]
+        data['Jackpot'] = row[8]
+        data['first_prize_number'] = row[9]
+        data['first_prize_bonus'] = row[10]
+        data['second_prize_number'] = row[11]
+        data['second_prize_bonus'] = row[12]
+        data['prize_data'] = row[13]
+        data['current_bankroll'] =row[14]
+        result["data"]= data
+        jsonData.append(result)
+
+
+    print(jsonData)
+
+    cursor.close()  # 关闭连接
+    db.close()
+
+    return jsonData
+
 
 
