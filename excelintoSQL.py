@@ -1,7 +1,10 @@
 import mysql.connector
 import xlrd
 import sys
+from xlrd import xldate_as_datetime
+from xlrd import xldate_as_tuple
 import json
+from datetime import datetime
 
 '''
     连接数据库
@@ -58,6 +61,58 @@ def store_to(db_name, table_name, excel_file):
 
     book = open_excel(excel_file)  # 打开excel文件
     sheets = book.sheet_names()  # 获取所有sheet表名
+
+
+
+    # for sheet in sheets:
+    #     print("打开表成功")
+    #     sh = book.sheet_by_name(sheet)  # 打开每一张表
+    #     row_num = sh.nrows
+    #     print(row_num)
+    #     list = []  # 定义列表用来存放数据
+    #     num = 0  # 用来控制每次插入的数量
+    #
+    #     '''
+    #      sql = "INSERT INTO double (issue, red1, red2, red3, red4, red5, red6, blue,jackpot , first_prize_number, first_prize_bonus,second_prize_number, second_prize_bonus, current_bankroll, prize_date)\
+    #         VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    #
+    #     sql2 = "INSERT INTO `" + table_name + "` (issue, red1, red2, red3, red4, red5, red6, blue,jackpot" \
+    #            ", first_prize_number, first_prize_bonus,second_prize_number" \
+    #            ", second_prize_bonus, current_bankroll, prize_date) " \
+    #            "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    #
+    #     val = [
+    #         ('18113','1','6','9','16','25','26','9', '1073781687','11','5895165','208','59175','314160394','2018/9/27'),
+    #         ('18112','5','8','18','25','26','31','4','1101702921','11','6090396','154','97356','302328982','2018/9/25')
+    #     ]
+    #
+    #     cursor.executemany(sql2, val)
+    #
+    #    #cursor.executemany(sql,val)  # 执行sql语句
+    #    '''
+    #
+    #
+    #     for i in range(0, row_num-1):  # 第一行是标题名，对应表中的字段名所以应该从第二行开始，计算机以0开始计数，所以值是1
+    #         row_data = sh.row_values(i) # 按行获取excel的值
+    #         print(row_data)
+    #         value = (int(row_data[0]), int(row_data[1]), int(row_data[2]), int(row_data[3]), int(row_data[4]), int(row_data[5]), int(row_data[6]), int(row_data[7]), int(row_data[8]), int(row_data[9]), int(row_data[10]), int(row_data[11]), int(row_data[12]),int(row_data[13]))
+    #         list.append(value)  # 将数据暂存在列表
+    #         print(list)
+    #         a = int(row_data[0])
+    #         #row_data[14] = xldate_as_datetime(row_data[14],0)
+    #
+    #         num += 1
+    #         if (num >= 10):  # 每一万条数据执行一次插入
+    #             print("开始写入")
+    #             print(sys.getsizeof(list))
+    #             #row_data[14] = xldate_as_datetime(row_data[14], 0)
+    #             #print(row_data[14])
+    #             sql = "INSERT INTO `double` (issue, red1, red2, red3, red4, red5, red6, blue,jackpot , first_prize_number, first_prize_bonus,second_prize_number, second_prize_bonus, current_bankroll) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
+    #             cursor.executemany(sql,list)  # 执行sql语句
+    #             num = 0  # 计数归零
+    #             list.clear()  # 清空list
+    #             print("worksheets: " + sheet + " has been inserted 10 datas!")
+
     for sheet in sheets:
         print("打开表成功")
         sh = book.sheet_by_name(sheet)  # 打开每一张表
@@ -66,45 +121,32 @@ def store_to(db_name, table_name, excel_file):
         list = []  # 定义列表用来存放数据
         num = 0  # 用来控制每次插入的数量
 
-        '''
-         sql = "INSERT INTO double (issue, red1, red2, red3, red4, red5, red6, blue,jackpot , first_prize_number, first_prize_bonus,second_prize_number, second_prize_bonus, current_bankroll, prize_date)\
-            VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 
-        sql2 = "INSERT INTO `" + table_name + "` (issue, red1, red2, red3, red4, red5, red6, blue,jackpot" \
-               ", first_prize_number, first_prize_bonus,second_prize_number" \
-               ", second_prize_bonus, current_bankroll, prize_date) " \
-               "VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-
-        val = [
-            ('18113','1','6','9','16','25','26','9', '1073781687','11','5895165','208','59175','314160394','2018/9/27'),
-            ('18112','5','8','18','25','26','31','4','1101702921','11','6090396','154','97356','302328982','2018/9/25')
-        ]
-
-        cursor.executemany(sql2, val)
-
-       #cursor.executemany(sql,val)  # 执行sql语句
-       '''
-
-
-        for i in range(0, row_num):  # 第一行是标题名，对应表中的字段名所以应该从第二行开始，计算机以0开始计数，所以值是1
+        for i in range(0, row_num-1):  # 第一行是标题名，对应表中的字段名所以应该从第二行开始，计算机以0开始计数，所以值是1
             row_data = sh.row_values(i)  # 按行获取excel的值
-            value = (row_data[0], row_data[1], row_data[2], row_data[3], row_data[4], row_data[5], row_data[6], row_data[7], row_data[8], row_data[9], row_data[10], row_data[11], row_data[12],row_data[13], row_data[14])
+            value = xldate_as_datetime(row_data[0],0)
+            print(value)
             list.append(value)  # 将数据暂存在列表
+            print(list)
+            # row_data[14] = xldate_as_datetime(row_data[14],0)
+
             num += 1
             if (num >= 10):  # 每一万条数据执行一次插入
                 print("开始写入")
                 print(sys.getsizeof(list))
-                sql = "INSERT INTO `" + table_name + "` (issue, red1, red2, red3, red4, red5, red6, blue,jackpot , first_prize_number, first_prize_bonus,second_prize_number, second_prize_bonus, current_bankroll, prize_date)\
-                VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-                cursor.executemany(sql,list)  # 执行sql语句
+                sql = "INSERT INTO `double` prize_data VALUES %Y-%m-%d"
+                cursor.executemany(sql, list)  # 执行sql语句
                 num = 0  # 计数归零
                 list.clear()  # 清空list
-                print("worksheets: " + sheet + " has been inserted 10 datas!")
+                print("日期表格输入数据库成功")
+
 
     print("worksheets: " + sheet + " has been inserted " + str(row_num) + " datas!")
     db.commit()  # 提交
     cursor.close()  # 关闭连接
     db.close()
+
+
 
 
 def from_store(db_name):
@@ -146,12 +188,12 @@ def from_store(db_name):
 
     return jsonData
 
-def from_store(db_name):
+def from_store_1(db_name):
 
     db = mysql_link(db_name)  # 打开数据库连接
     cursor = db.cursor()  # 使用 cursor() 方法创建一个游标对象 cursor
 
-    sql2 = "SELECT * FROM `double` WHERE issue=18110"
+    sql2 = "SELECT * FROM `double` LIMIT 0,20"
     cursor.execute(sql2)
     rows = cursor.fetchall()
     jsonData = []
@@ -185,5 +227,5 @@ def from_store(db_name):
 
     return jsonData
 
-
-
+if __name__ == "__main__":
+    double = store_to('CheckCai','double','dateB.xlsx')
